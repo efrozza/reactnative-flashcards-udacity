@@ -1,26 +1,74 @@
 import { AsyncStorage } from 'react-native'
-import { FLASHCARDS_STORAGE_KEY, formatCalendarResults } from './_calendar'
+export const CARDS_STORAGE_KEY = 'UdacityFlashCards:flashcards'
 
-export function fetchDecksResults () {
-  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then(
-    formatCalendarResults
-  )
+const defaultData = {
+  React: {
+    title: 'Deck React',
+    questions: [
+      {
+        question: 'Question 1?',
+        answer: 'Answer 1',
+        correct: 'no'
+      },
+      {
+        question: 'Question 2?',
+        answer: 'Answer 2',
+        correct: 'no'
+      }
+    ]
+  },
+  Redux: {
+    title: 'Redux ',
+    questions: [
+      {
+        question: 'Question 3?',
+        answer: 'Answer 3',
+        correct: 'no'
+      },
+      {
+        question: 'Question 4?',
+        answer: 'Answer 4',
+        correct: 'yes'
+      }
+    ]
+  },
+  DB2: {
+    title: 'DB2 ',
+    questions: [
+      {
+        question: 'Question 3?',
+        answer: 'Answer 3',
+        correct: 'no'
+      },
+      {
+        question: 'Question 4?',
+        answer: 'Answer 4',
+        correct: 'yes'
+      }
+    ]
+  }
 }
 
-export function submitEntry ({ entry, key }) {
+export function getDecks (deck) {
+  return AsyncStorage.getItem(CARDS_STORAGE_KEY).then(results => {
+    if (results === null) {
+      AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(defaultData))
+      return defaultData
+    } else {
+      return JSON.parse(results)
+    }
+  })
+}
+
+// insert a new deck with title passed in AddDeck
+export function addNewDeck (title) {
   return AsyncStorage.mergeItem(
-    FLASHCARDS_STORAGE_KEY,
+    CARDS_STORAGE_KEY,
     JSON.stringify({
-      [key]: entry
+      [title]: {
+        title: title,
+        questions: []
+      }
     })
   )
-}
-
-export function removeEntry (key) {
-  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then(results => {
-    const data = JSON.parse(results)
-    data[key] = undefined
-    delete data[key]
-    AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data))
-  })
 }
