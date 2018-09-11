@@ -3,7 +3,7 @@ export const CARDS_STORAGE_KEY = 'UdacityFlashCards:flashcards'
 
 const defaultData = {
   React: {
-    title: 'Deck React',
+    title: 'Blank Deck',
     questions: [
       {
         question: 'Question 1?',
@@ -16,39 +16,9 @@ const defaultData = {
         correct: 'no'
       }
     ]
-  },
-  Redux: {
-    title: 'Redux ',
-    questions: [
-      {
-        question: 'Question 3?',
-        answer: 'Answer 3',
-        correct: 'no'
-      },
-      {
-        question: 'Question 4?',
-        answer: 'Answer 4',
-        correct: 'yes'
-      }
-    ]
-  },
-  DB2: {
-    title: 'DB2 ',
-    questions: [
-      {
-        question: 'Question 3?',
-        answer: 'Answer 3',
-        correct: 'no'
-      },
-      {
-        question: 'Question 4?',
-        answer: 'Answer 4',
-        correct: 'yes'
-      }
-    ]
   }
 }
-
+// obtain decks
 export function getDecks (deck) {
   return AsyncStorage.getItem(CARDS_STORAGE_KEY).then(results => {
     if (results === null) {
@@ -71,4 +41,14 @@ export function addNewDeck (title) {
       }
     })
   )
+}
+
+export function addCardDeck (deckTitle, card) {
+  return AsyncStorage.getItem(CARDS_STORAGE_KEY)
+    .then(results => JSON.parse(results))
+    .then(results => {
+      results[deckTitle].questions.push(card)
+      AsyncStorage.setItem(CARDS_STORAGE_KEY, JSON.stringify(results))
+      return results
+    })
 }

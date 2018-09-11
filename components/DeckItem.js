@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import { connect } from 'react-redux'
-import { getDecks } from '../utils/api'
 
 class DeckItem extends Component {
   render () {
@@ -14,8 +13,18 @@ class DeckItem extends Component {
           {decks[deck].title}
         </Text>
         <Text>
-          {decks[deck].questions.length}
+          {decks[deck].questions.length} cards
         </Text>
+        <Button
+          onPress={() =>
+            this.props.navigation.navigate('AddCard', { entryId: deck })}
+          title='Add Card'
+        />
+        <Button
+          onPress={() =>
+            this.props.navigation.navigate('Quiz', { entryId: deck })}
+          title='Start Quiz'
+        />
       </View>
     )
   }
