@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavigationsActions } from 'react-navigation';
-import {
-  Text,
-  View,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Button,
-} from 'react-native';
+import { Text, View, StyleSheet, Button } from 'react-native';
 
 class Quiz extends Component {
   state = {
     currentQuestion: 0,
     showQuestion: false,
+    correctQuestions: 0,
+    incorrectQuestions: 0,
   };
 
   handleQuestion = () => {
@@ -21,30 +16,51 @@ class Quiz extends Component {
       : this.setState({ showQuestion: false });
   };
 
+  handleAnswer = answer => {
+    if (answer == '1') {
+      this.setState({ correctQuestions: this.state.correctQuestions + 1 });
+    } else {
+      this.setState({ incorrectQuestions: this.state.incorrectQuestions + 1 });
+    }
+    this.setState({ showQuestion: false });
+    this.setState({ currentQuestion: this.state.currentQuestion + 1 });
+  };
+
   render() {
     const decks = this.props.decks;
     const deck = this.props.navigation.state.params.entryId;
 
-    return (
-      <View style={styles.container}>
-        <Text>
-          {this.state.currentQuestion + 1} / {decks[deck].questions.length}
-        </Text>
-        {!this.state.showQuestion
-          ? <Text>
-              {decks[deck].questions[this.state.currentQuestion].question}
-            </Text>
-          : <Text>
-              {decks[deck].questions[this.state.currentQuestion].answer}
-            </Text>}
-        {!this.state.showQuestion
-          ? <Button title="Show Answer" onPress={this.handleQuestion} />
-          : <Button title="Show Question" onPress={this.handleQuestion} />}
+    if (this.state.currentQuestion === decks[deck].questions.length) {
+      return (
+        <View>
+          <Text>
+            Você finalizou o quiz e acertou {this.state.correctQuestions} de{' '}
+            {decks[deck].questions.length} questões.
+          </Text>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <Text>
+            {this.state.currentQuestion + 1} / {decks[deck].questions.length}
+          </Text>
+          {!this.state.showQuestion
+            ? <Text>
+                {decks[deck].questions[this.state.currentQuestion].question}
+              </Text>
+            : <Text>
+                {decks[deck].questions[this.state.currentQuestion].answer}
+              </Text>}
+          {!this.state.showQuestion
+            ? <Button title="Show Answer" onPress={this.handleQuestion} />
+            : <Button title="Show Question" onPress={this.handleQuestion} />}
 
-        <Button title="Incorrect" />
-        <Button title="Correct" />
-      </View>
-    );
+          <Button title="Incorrect" onPress={() => this.handleAnswer('0')} />
+          <Button title="Correct" onPress={() => this.handleAnswer('1')} />
+        </View>
+      );
+    }
   }
 }
 
