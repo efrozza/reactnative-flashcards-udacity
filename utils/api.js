@@ -7,13 +7,11 @@ const defaultData = {
     questions: [
       {
         question: 'Question 1?',
-        answer: 'Answer 1',
-        correct: 'no'
+        answer: 'Answer 1'
       },
       {
         question: 'Question 2?',
-        answer: 'Answer 2',
-        correct: 'no'
+        answer: 'Answer 2'
       }
     ]
   }

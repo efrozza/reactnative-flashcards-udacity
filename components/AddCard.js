@@ -16,7 +16,6 @@ class AddCard extends Component {
   state = {
     question: '',
     answer: '',
-    correct: '',
   };
 
   handleQuestion = question => {
@@ -33,11 +32,11 @@ class AddCard extends Component {
 
   submitCard = deck => {
     //extract params from state
-    const { question, answer, correct } = this.state;
+    const { question, answer } = this.state;
 
     //dispatch the action sending params
     this.props.dispatch(insertCard({ question, answer, deck }));
-    addCardDeck(deck, { question, answer, correct });
+    addCardDeck(deck, { question, answer });
 
     this.setState({ answer: '', question: '' });
 
