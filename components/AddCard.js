@@ -34,14 +34,16 @@ class AddCard extends Component {
     //extract params from state
     const { question, answer } = this.state;
 
-    //dispatch the action sending params
-    this.props.dispatch(insertCard({ question, answer, deck }));
-    addCardDeck(deck, { question, answer });
+    if (question && answer) {
+      //dispatch the action sending params
+      this.props.dispatch(insertCard({ question, answer, deck }));
+      addCardDeck(deck, { question, answer });
 
-    this.setState({ answer: '', question: '' });
+      this.setState({ answer: '', question: '' });
 
-    //back to the previous screen
-    this.props.navigation.dispatch(NavigationActions.back({ key: null }));
+      //back to the previous screen
+      this.props.navigation.dispatch(NavigationActions.back({ key: null }));
+    }
   };
 
   render() {
@@ -56,7 +58,7 @@ class AddCard extends Component {
           <TextInput onChangeText={this.handleAnswer} style={styles.input} />
           <Button
             onPress={() => this.submitCard(deck)}
-            title="Submit"
+            title="Create Deck"
             style={styles.submit}
           />
         </View>

@@ -9,10 +9,10 @@ class DeckItem extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>
+        <Text style={styles.text}>
           {decks[deck].title}
         </Text>
-        <Text>
+        <Text style={styles.text}>
           {decks[deck].questions.length} cards
         </Text>
         <Button
@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontSize: 20,
+    color: '#333',
     alignItems: 'center'
   }
 })

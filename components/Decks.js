@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, ScrollView, Text, StyleSheet, Button } from 'react-native'
 import { getDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { connect } from 'react-redux'
@@ -12,14 +12,14 @@ class Decks extends Component {
   render () {
     const { decks } = this.props
     return (
-      <View style={styles.container}>
+      <ScrollView>
         {Object.keys(decks).map(deck => {
           // extract vars from apiData
           const { title, questions } = decks[deck]
 
           return (
             <View key={deck}>
-              <Text>
+              <Text style={styles.text}>
                 {title} / {questions.length}
               </Text>
               <Button
@@ -30,7 +30,7 @@ class Decks extends Component {
             </View>
           )
         })}
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -39,6 +39,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontSize: 20,
+    color: '#333',
     alignItems: 'center'
   }
 })

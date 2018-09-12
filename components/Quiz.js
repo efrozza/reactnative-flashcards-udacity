@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text, View, StyleSheet, Button } from 'react-native';
+import { NavigationActions } from 'react-navigation';
+import { setLocalNotification } from '../utils/general';
 
 class Quiz extends Component {
   state = {
@@ -24,6 +26,22 @@ class Quiz extends Component {
     }
     this.setState({ showQuestion: false });
     this.setState({ currentQuestion: this.state.currentQuestion + 1 });
+    setLocalNotification();
+  };
+
+  handleRestartQuiz = () => {
+    console.log('handleRestartQuiz');
+    this.setState({
+      currentQuestion: 0,
+      showQuestion: false,
+      correctQuestions: 0,
+      incorrectQuestions: 0,
+    });
+  };
+
+  handlebackToDeck = () => {
+    console.log('handlebackToDeck');
+    this.props.navigation.dispatch(NavigationActions.back({ key: null }));
   };
 
   render() {
@@ -32,11 +50,13 @@ class Quiz extends Component {
 
     if (this.state.currentQuestion === decks[deck].questions.length) {
       return (
-        <View>
-          <Text>
-            Você finalizou o quiz e acertou {this.state.correctQuestions} de{' '}
-            {decks[deck].questions.length} questões.
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            You are done! Score: {this.state.correctQuestions} / Total cards:{' '}
+            {decks[deck].questions.length}
           </Text>
+          <Button title="Restart Quiz" onPress={this.handleRestartQuiz} />
+          <Button title="Back to Deck" onPress={this.handlebackToDeck} />
         </View>
       );
     } else {
@@ -69,15 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  input: {
-    width: 250,
-    height: 45,
-    padding: 8,
-    borderWidth: 1,
-    borderColor: '#757575',
-    margin: 50,
-    borderRadius: 8,
   },
   title: {
     fontSize: 30,

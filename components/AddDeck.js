@@ -18,10 +18,12 @@ class AddDeck extends Component {
   submitDeck = () => {
     const { title } = this.state;
 
-    addNewDeck(title);
-    this.props.dispatch(insertDeck(title));
-    this.props.navigation.navigate('DeckItem', { entryId: title });
-    this.setState({ title: '' });
+    if (title) {
+      addNewDeck(title);
+      this.props.dispatch(insertDeck(title));
+      this.props.navigation.navigate('DeckItem', { entryId: title });
+      this.setState({ title: '' });
+    }
   };
 
   render() {
