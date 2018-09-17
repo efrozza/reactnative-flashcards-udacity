@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { insertDeck } from '../actions/';
 import { addNewDeck } from '../utils/api';
+import { white } from '../utils/colors';
 
 class AddDeck extends Component {
   state = {
@@ -30,19 +38,17 @@ class AddDeck extends Component {
     const { title } = this.state;
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Whats is the title of your deck?</Text>
-        <TextInput
-          value={title}
-          onChangeText={this.handleTitle}
-          style={styles.input}
-        />
-        <Button
-          onPress={this.submitDeck}
-          title="Submit"
-          style={styles.submit}
-        />
-      </View>
+      <KeyboardAvoidingView behavior="padding" style={styles.container} enabled>
+        <View style={{ margin: 20 }}>
+          <Text style={styles.title}>Whats is the title of your deck?</Text>
+          <TextInput
+            value={title}
+            onChangeText={this.handleTitle}
+            style={styles.input}
+          />
+          <Button onPress={this.submitDeck} title="Add Deck" color="#32CD32" />
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -50,8 +56,9 @@ class AddDeck extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: white,
   },
   input: {
     width: 250,
@@ -64,15 +71,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    color: '#333',
-    alignItems: 'center',
-  },
-  submit: {
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    padding: 10,
-    borderRadius: 7,
-    overflow: 'hidden',
   },
 });
 

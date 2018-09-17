@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  View,
   Text,
   KeyboardAvoidingView,
   TextInput,
@@ -11,6 +10,7 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { insertCard } from '../actions';
 import { addCardDeck } from '../utils/api';
+import { white, gray } from '../utils/colors';
 
 class AddCard extends Component {
   state = {
@@ -50,18 +50,17 @@ class AddCard extends Component {
     const deck = this.props.navigation.state.params.entryId;
 
     return (
-      <KeyboardAvoidingView behaviour="padding" style={styles.container}>
-        <View style={styles.container}>
-          <Text>Question:</Text>
-          <TextInput onChangeText={this.handleQuestion} style={styles.input} />
-          <Text>Answer:</Text>
-          <TextInput onChangeText={this.handleAnswer} style={styles.input} />
-          <Button
-            onPress={() => this.submitCard(deck)}
-            title="Create Deck"
-            style={styles.submit}
-          />
-        </View>
+      <KeyboardAvoidingView behavior="padding" style={styles.container} enabled>
+        <Text style={styles.fontText}> Question:</Text>
+        <TextInput onChangeText={this.handleQuestion} style={styles.input} />
+        <Text style={styles.fontText}>Answer:</Text>
+        <TextInput onChangeText={this.handleAnswer} style={styles.input} />
+        <Button
+          color="#32CD32"
+          onPress={() => this.submitCard(deck)}
+          title="Add Card"
+          style={styles.submit}
+        />
       </KeyboardAvoidingView>
     );
   }
@@ -70,28 +69,29 @@ class AddCard extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: white,
+  },
+  box: {
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    backgroundColor: white,
+    borderRadius: 5,
+    margin: 5,
+    padding: 5,
+  },
+  fontText: {
+    fontSize: 25,
   },
   input: {
     width: 250,
-    height: 45,
-    padding: 8,
+    height: 35,
+    padding: 7,
     borderWidth: 1,
     borderColor: '#757575',
-    margin: 50,
+    margin: 12,
     borderRadius: 8,
-  },
-  title: {
-    fontSize: 30,
-    color: '#333',
-  },
-  submit: {
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    padding: 10,
-    borderRadius: 7,
-    overflow: 'hidden',
   },
 });
 
