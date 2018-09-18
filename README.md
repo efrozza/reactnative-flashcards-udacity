@@ -16,7 +16,12 @@ Notification
 * Run wit EXPO
     - `extract folder`
     - `cd flashcards`
+    - `npm install` 
     - `exp start --tunnel --dev`
+
+# Tests
+
+* This application was tested on IOS and Android (emulated with EXPO) plattaforms.
 
 
 

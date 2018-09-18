@@ -34,6 +34,7 @@ export function setLocalNotification () {
             time: nextDay,
             repeat: 'day'
           })
+          clearLocalNotification()
           AsyncStorage.setItem(NOTIFICATIONS_KEY, JSON.stringify(true))
         } else {
           console.log('You don´t have permission')
